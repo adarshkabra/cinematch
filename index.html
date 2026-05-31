@@ -29,37 +29,13 @@
     min-height: 100vh;
   }
 
-  /* ── HEADER — cinematic navbar ── */
+  /* ── HEADER ── */
   header {
-    background: linear-gradient(180deg, #0a0a0f 0%, #0e0d0b 100%);
-    position: relative;
-    overflow: hidden;
+    background: var(--surface);
     padding: 0.85rem 2rem;
-    border-bottom: 1px solid rgba(157,117,52,0.15);
-  }
-  /* subtle golden glow */
-  header::before {
-    content: '';
-    position: absolute;
-    top: -40px; left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 120px;
-    background: radial-gradient(ellipse at top, rgba(157,117,52,0.15) 0%, transparent 65%);
-    pointer-events: none;
-  }
-  /* film grain overlay */
-  header::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
-    pointer-events: none;
-    opacity: 0.55;
+    border-bottom: 1px solid var(--border2);
   }
   .header-inner {
-    position: relative;
-    z-index: 1;
     max-width: 860px;
     margin: 0 auto;
     display: flex;
@@ -70,23 +46,22 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.65rem;
     letter-spacing: -0.5px;
-    color: #ffffff;
+    color: var(--text);
     line-height: 1;
   }
   .logo span { color: var(--gold); font-style: italic; }
   .header-right { text-align: right; }
   .tagline {
     font-size: 10px;
-    color: rgba(255,255,255,0.45);
+    color: var(--muted);
     letter-spacing: 2.5px;
     text-transform: uppercase;
     font-weight: 400;
   }
   .disclaimer {
-    position: relative;
-    z-index: 1;
     font-size: 9.5px;
-    color: rgba(255,255,255,0.18);
+    color: var(--muted);
+    opacity: 0.6;
     margin-top: 2px;
   }
 
@@ -189,34 +164,23 @@
 
   /* ── CHIPS ── */
   .examples {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin-top: 12px;
   }
   .chip {
     font-size: 12px;
-    font-weight: 500;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border2);
     border-radius: 20px;
     padding: 6px 15px;
     cursor: pointer;
-    border: 1.5px solid transparent;
-    transition: transform 0.12s, box-shadow 0.15s, opacity 0.15s;
+    text-align: center;
+    transition: color 0.15s, border-color 0.15s;
   }
-  .chip:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.13); }
-  .chip:active { transform: translateY(0); opacity: 0.85; }
-
-  .chip-thriller { background: rgba(220,53,53,0.09); color: #b52d2d; border-color: rgba(220,53,53,0.22); }
-  .chip-thriller:hover { background: rgba(220,53,53,0.15); }
-
-  .chip-comedy { background: rgba(216,165,0,0.11); color: #7a5c00; border-color: rgba(216,165,0,0.32); }
-  .chip-comedy:hover { background: rgba(216,165,0,0.2); }
-
-  .chip-crime { background: rgba(130,60,175,0.1); color: #6e2fa0; border-color: rgba(130,60,175,0.25); }
-  .chip-crime:hover { background: rgba(130,60,175,0.17); }
-
-  .chip-drama { background: rgba(37,118,185,0.09); color: #1660a0; border-color: rgba(37,118,185,0.24); }
-  .chip-drama:hover { background: rgba(37,118,185,0.15); }
+  .chip:hover { color: var(--gold); border-color: var(--gold); }
 
   /* ── LOADING ── */
   .loading { display: none; padding: 3.5rem 0; text-align: center; }
