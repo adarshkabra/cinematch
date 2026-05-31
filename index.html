@@ -19,7 +19,7 @@
     --gold: #9d7534;
     --gold-dim: rgba(157,117,52,0.09);
     --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
-    --shadow-hover: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.08);
+    --shadow-hover: 0 2px 8px rgba(0,0,0,0.09), 0 8px 28px rgba(0,0,0,0.09);
   }
 
   body {
@@ -29,13 +29,37 @@
     min-height: 100vh;
   }
 
-  /* ── HEADER ── */
+  /* ── HEADER — cinematic dark ── */
   header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border2);
-    padding: 2rem 2rem 1.25rem;
+    background: linear-gradient(155deg, #111008 0%, #090807 45%, #0d0b04 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 2.75rem 2rem 1.6rem;
+    border-bottom: 1px solid rgba(157,117,52,0.18);
+  }
+  /* warm golden glow from top-center */
+  header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 280px;
+    background: radial-gradient(ellipse at top, rgba(157,117,52,0.14) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  /* film grain overlay */
+  header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.55;
   }
   .header-inner {
+    position: relative;
+    z-index: 1;
     max-width: 860px;
     margin: 0 auto;
     display: flex;
@@ -44,30 +68,30 @@
   }
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-size: 2.4rem;
     letter-spacing: -0.5px;
-    color: var(--text);
+    color: #fff;
     line-height: 1;
   }
   .logo span { color: var(--gold); font-style: italic; }
   .tagline {
-    font-size: 11.5px;
-    color: var(--muted);
-    letter-spacing: 1.5px;
+    font-size: 10.5px;
+    color: rgba(157,117,52,0.8);
+    letter-spacing: 3px;
     text-transform: uppercase;
-    padding-bottom: 4px;
+    padding-bottom: 6px;
   }
   .disclaimer {
+    position: relative;
+    z-index: 1;
     max-width: 860px;
-    margin: 0 auto;
-    padding: 6px 0 0;
+    margin: 0.75rem auto 0;
     font-size: 10.5px;
-    color: var(--muted);
-    opacity: 0.8;
+    color: rgba(255,255,255,0.27);
   }
 
   /* ── MAIN ── */
-  main { max-width: 860px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+  main { max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 5rem; }
 
   /* ── INPUT SECTION ── */
   .input-section { margin-bottom: 2rem; }
@@ -84,14 +108,23 @@
   .input-wrap {
     position: relative;
     background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: 12px;
+    border: 1.5px solid var(--border2);
+    border-radius: 16px;
     box-shadow: var(--shadow);
     transition: border-color 0.2s, box-shadow 0.2s;
   }
   .input-wrap:focus-within {
     border-color: var(--gold);
     box-shadow: 0 0 0 3px rgba(157,117,52,0.1), var(--shadow);
+  }
+  .input-icon {
+    position: absolute;
+    top: 1.3rem;
+    left: 1.2rem;
+    font-size: 1.3rem;
+    pointer-events: none;
+    z-index: 1;
+    line-height: 1;
   }
 
   textarea {
@@ -103,34 +136,49 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 15px;
     color: var(--text);
-    padding: 1.25rem 1.25rem 3.5rem;
-    line-height: 1.7;
-    min-height: 120px;
+    padding: 1.3rem 1.25rem 4rem 3.4rem;
+    line-height: 1.75;
+    min-height: 140px;
   }
   textarea::placeholder { color: var(--muted); font-style: italic; }
 
   .input-footer {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    padding: 0.75rem 1.25rem;
+    padding: 0.8rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    border-radius: 0 0 12px 12px;
+    border-radius: 0 0 16px 16px;
   }
-  .input-hint { font-size: 12px; color: var(--muted); }
+  .input-hint {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .input-hint kbd {
+    font-family: inherit;
+    font-size: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--muted);
+  }
 
   .btn-find {
     background: var(--gold);
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 9px;
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
     font-weight: 500;
-    padding: 8px 20px;
+    padding: 9px 22px;
     cursor: pointer;
     letter-spacing: 0.5px;
     transition: opacity 0.2s, transform 0.1s;
@@ -139,7 +187,7 @@
   .btn-find:active { transform: scale(0.98); }
   .btn-find:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* example chips */
+  /* ── CHIPS ── */
   .examples {
     display: flex;
     flex-wrap: wrap;
@@ -148,22 +196,30 @@
   }
   .chip {
     font-size: 12px;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border2);
+    font-weight: 500;
     border-radius: 20px;
-    padding: 5px 14px;
+    padding: 6px 15px;
     cursor: pointer;
-    transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    border: 1.5px solid transparent;
+    transition: transform 0.12s, box-shadow 0.15s, opacity 0.15s;
   }
-  .chip:hover { color: var(--gold); border-color: var(--gold); box-shadow: 0 2px 8px rgba(157,117,52,0.1); }
+  .chip:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.13); }
+  .chip:active { transform: translateY(0); opacity: 0.85; }
+
+  .chip-thriller { background: rgba(220,53,53,0.09); color: #b52d2d; border-color: rgba(220,53,53,0.22); }
+  .chip-thriller:hover { background: rgba(220,53,53,0.15); }
+
+  .chip-comedy { background: rgba(216,165,0,0.11); color: #7a5c00; border-color: rgba(216,165,0,0.32); }
+  .chip-comedy:hover { background: rgba(216,165,0,0.2); }
+
+  .chip-crime { background: rgba(130,60,175,0.1); color: #6e2fa0; border-color: rgba(130,60,175,0.25); }
+  .chip-crime:hover { background: rgba(130,60,175,0.17); }
+
+  .chip-drama { background: rgba(37,118,185,0.09); color: #1660a0; border-color: rgba(37,118,185,0.24); }
+  .chip-drama:hover { background: rgba(37,118,185,0.15); }
 
   /* ── LOADING ── */
-  .loading {
-    display: none;
-    padding: 3rem 0;
-    text-align: center;
-  }
+  .loading { display: none; padding: 3.5rem 0; text-align: center; }
   .loading.visible { display: block; }
   .film-strip {
     display: flex;
@@ -183,7 +239,14 @@
   .film-strip span:nth-child(4) { animation-delay: 0.45s; }
   .film-strip span:nth-child(5) { animation-delay: 0.6s; }
   @keyframes pulse { 0%,100%{opacity:0.2;height:20px} 50%{opacity:1;height:32px} }
-  .loading p { font-size: 13px; color: var(--muted); font-style: italic; }
+  .loading-msg {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    transition: opacity 0.3s ease;
+    min-height: 1.4em;
+  }
+  .loading-msg.fade { opacity: 0; }
 
   /* ── RESULTS ── */
   .results { display: none; }
@@ -216,21 +279,18 @@
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
+    border-left: 4px solid var(--gc, var(--gold));
     border-radius: 14px;
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 1.5rem 1.35rem;
     margin-bottom: 1rem;
     display: grid;
     grid-template-columns: 2.5rem 1fr;
     gap: 1rem;
     box-shadow: var(--shadow);
-    transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+    transition: box-shadow 0.2s, transform 0.15s;
     animation: fadeUp 0.4s ease both;
   }
-  .card:hover {
-    box-shadow: var(--shadow-hover);
-    border-color: var(--border2);
-    transform: translateY(-1px);
-  }
+  .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -244,13 +304,11 @@
   .card-num {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
-    color: var(--gold);
-    opacity: 0.45;
+    color: var(--gc, var(--gold));
+    opacity: 0.5;
     padding-top: 2px;
     line-height: 1;
   }
-
-  .card-body {}
 
   .card-top {
     display: flex;
@@ -260,7 +318,6 @@
     margin-bottom: 8px;
     flex-wrap: wrap;
   }
-
   .card-title {
     font-family: 'Playfair Display', serif;
     font-size: 1.15rem;
@@ -268,12 +325,7 @@
     line-height: 1.3;
   }
 
-  .badges {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    flex-shrink: 0;
-  }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
   .badge {
     font-size: 11px;
     font-weight: 500;
@@ -283,6 +335,7 @@
   }
   .badge-type { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(157,117,52,0.2); }
   .badge-lang { background: var(--surface2); color: var(--muted); border: 1px solid var(--border2); }
+  .badge-genre { font-size: 10.5px; padding: 2px 9px; border-radius: 20px; }
 
   .card-cast {
     font-size: 13px;
@@ -294,9 +347,10 @@
 
   .card-meta {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
     margin-bottom: 10px;
+    align-items: center;
   }
   .meta-item {
     font-size: 12px;
@@ -312,34 +366,28 @@
     opacity: 0.5;
     flex-shrink: 0;
   }
-  .meta-rating {
-    font-size: 12px;
-    color: #5a7a4a;
-    font-weight: 500;
+  .meta-stars {
     display: flex;
     align-items: center;
     gap: 5px;
+    font-size: 12px;
   }
-  .meta-rating .meta-dot { background: #5a7a4a; }
+  .stars-visual { color: #c89a10; letter-spacing: 1px; font-size: 13px; }
+  .stars-score { color: var(--muted); }
+  .meta-rt { font-size: 12px; color: #c84a15; font-weight: 500; }
 
   .card-platform {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text);
-    background: var(--surface2);
-    border: 1px solid var(--border2);
+    font-size: 11.5px;
+    font-weight: 600;
     border-radius: 6px;
-    padding: 4px 10px;
+    padding: 4px 11px;
     margin-bottom: 10px;
+    letter-spacing: 0.2px;
   }
-  .platform-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
+  .platform-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.7; }
 
   .card-reason {
     font-size: 13px;
@@ -364,7 +412,8 @@
   .error.visible { display: block; }
 
   @media (max-width: 600px) {
-    .header-inner { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .header-inner { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .tagline { padding-bottom: 0; }
     .card { grid-template-columns: 1.5rem 1fr; }
     .card-num { font-size: 1.1rem; }
     main { padding: 1.5rem 1rem 3rem; }
@@ -376,7 +425,7 @@
 <header>
   <div class="header-inner">
     <div class="logo">Cine<span>Match</span></div>
-    <div class="tagline">AI-powered recommendations</div>
+    <div class="tagline">AI-Powered Film Discovery</div>
   </div>
   <p class="disclaimer">Note: recommendations are based on the model's training data — OTT availability may have changed since the knowledge cutoff.</p>
 </header>
@@ -385,18 +434,19 @@
   <div class="input-section">
     <span class="input-label">What are you in the mood for?</span>
     <div class="input-wrap">
+      <span class="input-icon">🎬</span>
       <textarea id="moodInput" placeholder="Describe it like you're texting a friend... e.g. 'Something like Mirzapur but set in Mumbai, dark tone, good writing, doesn't have to be Hindi'" rows="4"></textarea>
       <div class="input-footer">
-        <span class="input-hint">Be as descriptive as you want — mood, genre, language, vibe</span>
+        <span class="input-hint">Mood, genre, language, vibe &nbsp;·&nbsp; <kbd>Enter</kbd> to search</span>
         <button class="btn-find" id="findBtn" onclick="getRecommendations()">Find for me →</button>
       </div>
     </div>
 
     <div class="examples">
-      <span class="chip" onclick="fillExample(this)">A mind-bending thriller like Inception but shorter</span>
-      <span class="chip" onclick="fillExample(this)">Light-hearted Hindi comedy for a lazy Sunday</span>
-      <span class="chip" onclick="fillExample(this)">Dark crime series, binge-worthy, doesn't matter the language</span>
-      <span class="chip" onclick="fillExample(this)">Something emotional but not too heavy, like The Pursuit of Happyness</span>
+      <span class="chip chip-thriller" onclick="fillExample(this)">A mind-bending thriller like Inception but shorter</span>
+      <span class="chip chip-comedy"  onclick="fillExample(this)">Light-hearted Hindi comedy for a lazy Sunday</span>
+      <span class="chip chip-crime"   onclick="fillExample(this)">Dark crime series, binge-worthy, doesn't matter the language</span>
+      <span class="chip chip-drama"   onclick="fillExample(this)">Something emotional but not too heavy, like The Pursuit of Happyness</span>
     </div>
   </div>
 
@@ -404,13 +454,13 @@
     <div class="film-strip">
       <span></span><span></span><span></span><span></span><span></span>
     </div>
-    <p>Scanning every frame of cinema history for you...</p>
+    <p class="loading-msg" id="loadingMsg">Lights, camera, action... 🎬</p>
   </div>
 
   <div class="error" id="errorBox"></div>
 
   <div class="results" id="results">
-    <div class="results-header">
+    <div class="results-header" id="resultsHeader">
       <div class="results-title">Top 5 picks</div>
       <div class="results-query" id="queryEcho"></div>
     </div>
@@ -419,58 +469,137 @@
 </main>
 
 <script>
+// ── Loading message rotator ──
+const LOADING_MSGS = [
+  "Lights, camera, action... 🎬",
+  "Consulting every film critic ever...",
+  "Scanning 100 years of cinema history...",
+  "Hunting for your perfect watch... 🍿",
+  "The reel deal is loading...",
+  "Rewinding the tape... ⏪",
+  "Asking the ghost of Roger Ebert...",
+];
+let msgTimer = null;
+
+function startMsgRotation() {
+  let idx = 0;
+  const el = document.getElementById('loadingMsg');
+  el.classList.remove('fade');
+  el.textContent = LOADING_MSGS[0];
+  msgTimer = setInterval(() => {
+    el.classList.add('fade');
+    setTimeout(() => {
+      idx = (idx + 1) % LOADING_MSGS.length;
+      el.textContent = LOADING_MSGS[idx];
+      el.classList.remove('fade');
+    }, 300);
+  }, 2200);
+}
+function stopMsgRotation() { clearInterval(msgTimer); msgTimer = null; }
+
+// ── Enter key submits (Shift+Enter = newline) ──
+document.getElementById('moodInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); getRecommendations(); }
+});
+
+// ── Genre → accent color ──
+function genreColor(genre) {
+  if (!genre) return null;
+  const g = genre.toLowerCase();
+  if (g.includes('thriller') || g.includes('horror') || g.includes('suspense')) return '#dc3535';
+  if (g.includes('comedy') || g.includes('rom-com'))                             return '#c89a10';
+  if (g.includes('drama') || g.includes('romance'))                              return '#2578c0';
+  if (g.includes('action') || g.includes('adventure'))                           return '#d4660a';
+  if (g.includes('crime') || g.includes('mystery') || g.includes('noir'))       return '#8230b0';
+  if (g.includes('sci-fi') || g.includes('science fiction') || g.includes('fantasy')) return '#148070';
+  if (g.includes('documentary') || g.includes('biography'))                     return '#5c7a7a';
+  return null;
+}
+
+function hexToRgba(hex, a) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+// ── OTT platform badge style ──
+function platformStyle(p) {
+  const s = p.toLowerCase();
+  if (s.includes('netflix'))                        return 'background:#e50914;color:#fff';
+  if (s.includes('prime'))                          return 'background:#00a8e0;color:#fff';
+  if (s.includes('disney') || s.includes('hotstar')) return 'background:#0f2f6b;color:#fff';
+  if (s.includes('jio'))                            return 'background:#6c0dc8;color:#fff';
+  if (s.includes('sony') || s.includes('sonyliv')) return 'background:#003087;color:#fff';
+  if (s.includes('zee'))                            return 'background:#6b2d8b;color:#fff';
+  if (s.includes('apple'))                          return 'background:#1c1c1e;color:#fff';
+  if (s.includes('mx'))                             return 'background:#e0540f;color:#fff';
+  return 'background:#3a3a3a;color:#fff';
+}
+
+// ── IMDb → star display ──
+function imdbStars(rating) {
+  const num = parseFloat(rating);
+  if (isNaN(num)) return null;
+  const filled = Math.round(num / 2);
+  return '★'.repeat(Math.min(filled, 5)) + '☆'.repeat(Math.max(0, 5 - filled));
+}
+
+// ── Main fetch ──
 async function getRecommendations() {
   const mood = document.getElementById('moodInput').value.trim();
-  if (!mood) { alert('Tell me what you\'re in the mood for!'); return; }
+  if (!mood) { alert("Tell me what you're in the mood for!"); return; }
 
   const btn = document.getElementById('findBtn');
   btn.disabled = true; btn.textContent = 'Finding...';
   document.getElementById('loading').classList.add('visible');
   document.getElementById('results').classList.remove('visible');
   document.getElementById('errorBox').classList.remove('visible');
+  startMsgRotation();
 
   try {
-    const response = await fetch('/api/recommend', {
+    const res = await fetch('/api/recommend', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ mood })
     });
-
-    if (!response.ok) {
-      const err = await response.json();
-      throw new Error(err.error || 'Server error');
-    }
-
-    const movies = await response.json();
-    renderCards(movies, mood);
-
+    if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Server error'); }
+    renderCards(await res.json(), mood);
   } catch (err) {
     const eb = document.getElementById('errorBox');
     eb.textContent = 'Something went wrong: ' + err.message;
     eb.classList.add('visible');
   } finally {
     btn.disabled = false; btn.textContent = 'Find for me →';
+    stopMsgRotation();
     document.getElementById('loading').classList.remove('visible');
   }
 }
 
+// ── Render ──
 function renderCards(movies, mood) {
   document.getElementById('queryEcho').textContent = `"${mood}"`;
   const container = document.getElementById('cardContainer');
   container.innerHTML = '';
 
   movies.forEach((m, i) => {
+    const gc = genreColor(m.genre) || '#9d7534';
     const typeLabel = m.type === 'Web Series'
       ? `Series${m.seasons ? ' · ' + m.seasons + ' season' + (m.seasons > 1 ? 's' : '') : ''}`
       : 'Film';
 
-    const ratingsHtml = [
-      m.imdb ? `<div class="meta-rating"><span class="meta-dot"></span>IMDb ${m.imdb}</div>` : '',
-      m.rottentomatoes ? `<div class="meta-rating"><span class="meta-dot"></span>RT ${m.rottentomatoes}</div>` : ''
-    ].join('');
+    const genreBadge = m.genre
+      ? `<span class="badge badge-genre" style="background:${hexToRgba(gc,0.11)};color:${gc};border:1px solid ${hexToRgba(gc,0.26)}">${m.genre}</span>`
+      : '';
+
+    const stars = imdbStars(m.imdb);
+    const imdbHtml = stars
+      ? `<div class="meta-stars"><span class="stars-visual">${stars}</span><span class="stars-score">${m.imdb}</span></div>`
+      : '';
+    const rtHtml = m.rottentomatoes
+      ? `<div class="meta-rt">🍅 ${m.rottentomatoes}</div>`
+      : '';
 
     container.innerHTML += `
-      <div class="card">
+      <div class="card" style="--gc:${gc}">
         <div class="card-num">${i + 1}</div>
         <div class="card-body">
           <div class="card-top">
@@ -478,25 +607,30 @@ function renderCards(movies, mood) {
             <div class="badges">
               <span class="badge badge-type">${typeLabel}</span>
               <span class="badge badge-lang">${m.language}</span>
+              ${genreBadge}
             </div>
           </div>
           <div class="card-cast"><strong>${m.cast}</strong></div>
           <div class="card-meta">
             <div class="meta-item"><span class="meta-dot"></span>${m.runtime}</div>
-            ${ratingsHtml}
+            ${imdbHtml}
+            ${rtHtml}
           </div>
-          <div class="card-platform"><span class="platform-dot"></span>${m.platform}</div>
+          <div class="card-platform" style="${platformStyle(m.platform || '')}"><span class="platform-dot"></span>${m.platform}</div>
           <div class="card-reason">${m.reason}</div>
         </div>
       </div>`;
   });
 
   document.getElementById('results').classList.add('visible');
-  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  // Small delay so the DOM paints before scrolling
+  setTimeout(() => {
+    document.getElementById('resultsHeader').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
 }
 
 function fillExample(el) {
-  document.getElementById('moodInput').value = el.textContent;
+  document.getElementById('moodInput').value = el.textContent.trim();
   document.getElementById('moodInput').focus();
 }
 </script>

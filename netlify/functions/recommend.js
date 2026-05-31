@@ -35,6 +35,7 @@ For each recommendation return ONLY a JSON array (no markdown, no backticks, no 
     "cast": "Top 3-4 actors",
     "runtime": "e.g. 2h 18m or 45 min/ep",
     "language": "e.g. Hindi, English, Korean",
+    "genre": "Primary genre e.g. Thriller, Comedy, Drama, Action, Crime, Horror, Sci-Fi, Romance, Documentary",
     "imdb": "e.g. 8.2/10 or null",
     "rottentomatoes": "e.g. 94% or null",
     "platform": "OTT platform available in India",
