@@ -29,23 +29,23 @@
     min-height: 100vh;
   }
 
-  /* ── HEADER — cinematic dark ── */
+  /* ── HEADER — cinematic navbar ── */
   header {
     background: linear-gradient(180deg, #0a0a0f 0%, #0e0d0b 100%);
     position: relative;
     overflow: hidden;
-    padding: 3rem 2rem 2rem;
+    padding: 0.85rem 2rem;
     border-bottom: 1px solid rgba(157,117,52,0.15);
   }
-  /* golden glow behind logo */
+  /* subtle golden glow */
   header::before {
     content: '';
     position: absolute;
-    top: -60px; left: 50%;
+    top: -40px; left: 50%;
     transform: translateX(-50%);
-    width: 700px;
-    height: 260px;
-    background: radial-gradient(ellipse at top, rgba(157,117,52,0.2) 0%, transparent 60%);
+    width: 600px;
+    height: 120px;
+    background: radial-gradient(ellipse at top, rgba(157,117,52,0.15) 0%, transparent 65%);
     pointer-events: none;
   }
   /* film grain overlay */
@@ -62,31 +62,32 @@
     z-index: 1;
     max-width: 860px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 3.8rem;
-    font-weight: 700;
-    letter-spacing: -1.5px;
+    font-size: 1.65rem;
+    letter-spacing: -0.5px;
     color: #ffffff;
     line-height: 1;
-    margin-bottom: 0.5rem;
   }
-  .logo span { color: #c9922a; font-style: italic; }
+  .logo span { color: var(--gold); font-style: italic; }
+  .header-right { text-align: right; }
   .tagline {
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 4px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     font-weight: 400;
   }
   .disclaimer {
     position: relative;
     z-index: 1;
-    max-width: 860px;
-    margin: 1.25rem auto 0;
-    font-size: 10px;
+    font-size: 9.5px;
     color: rgba(255,255,255,0.18);
+    margin-top: 2px;
   }
 
   /* ── MAIN ── */
@@ -239,13 +240,15 @@
   .film-strip span:nth-child(5) { animation-delay: 0.6s; }
   @keyframes pulse { 0%,100%{opacity:0.2;height:20px} 50%{opacity:1;height:32px} }
   .loading-msg {
-    font-size: 14px;
-    color: var(--muted);
+    font-size: 16px;
+    color: var(--text);
     font-style: italic;
     transition: opacity 0.3s ease;
     min-height: 1.4em;
+    animation: msgPulse 2.4s ease-in-out infinite;
   }
-  .loading-msg.fade { opacity: 0; }
+  .loading-msg.fade { opacity: 0; animation-play-state: paused; }
+  @keyframes msgPulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
 
   /* ── RESULTS ── */
   .results { display: none; }
@@ -410,7 +413,7 @@
   .error.visible { display: block; }
 
   @media (max-width: 600px) {
-    .logo { font-size: 2.8rem; }
+    .header-right { display: none; }
     .card { grid-template-columns: 1.5rem 1fr; }
     .card-num { font-size: 1.1rem; }
     main { padding: 1.5rem 1rem 3rem; }
@@ -422,9 +425,11 @@
 <header>
   <div class="header-inner">
     <div class="logo">Cine<span>Match</span></div>
-    <div class="tagline">AI-Powered Film Discovery</div>
+    <div class="header-right">
+      <div class="tagline">AI-Powered Film Discovery</div>
+      <p class="disclaimer">Recommendations based on training data — OTT availability may vary.</p>
+    </div>
   </div>
-  <p class="disclaimer">Note: recommendations are based on the model's training data — OTT availability may have changed since the knowledge cutoff.</p>
 </header>
 
 <main>
@@ -551,7 +556,9 @@ async function getRecommendations() {
   document.getElementById('results').classList.remove('visible');
   document.getElementById('errorBox').classList.remove('visible');
   startMsgRotation();
+  const t0 = Date.now();
 
+  let moviesData = null, fetchErr = null;
   try {
     const res = await fetch('/api/recommend', {
       method: 'POST',
@@ -559,15 +566,25 @@ async function getRecommendations() {
       body: JSON.stringify({ mood })
     });
     if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Server error'); }
-    renderCards(await res.json(), mood);
+    moviesData = await res.json();
   } catch (err) {
+    fetchErr = err;
+  }
+
+  // Loading screen stays for at least 2 seconds so the message is always seen
+  const remaining = 2000 - (Date.now() - t0);
+  if (remaining > 0) await new Promise(r => setTimeout(r, remaining));
+
+  btn.disabled = false; btn.textContent = 'Find for me →';
+  stopMsgRotation();
+  document.getElementById('loading').classList.remove('visible');
+
+  if (fetchErr) {
     const eb = document.getElementById('errorBox');
-    eb.textContent = 'Something went wrong: ' + err.message;
+    eb.textContent = 'Something went wrong: ' + fetchErr.message;
     eb.classList.add('visible');
-  } finally {
-    btn.disabled = false; btn.textContent = 'Find for me →';
-    stopMsgRotation();
-    document.getElementById('loading').classList.remove('visible');
+  } else {
+    renderCards(moviesData, mood);
   }
 }
 
