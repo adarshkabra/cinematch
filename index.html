@@ -31,21 +31,21 @@
 
   /* ── HEADER — cinematic dark ── */
   header {
-    background: linear-gradient(155deg, #111008 0%, #090807 45%, #0d0b04 100%);
+    background: linear-gradient(180deg, #0a0a0f 0%, #0e0d0b 100%);
     position: relative;
     overflow: hidden;
-    padding: 2.75rem 2rem 1.6rem;
-    border-bottom: 1px solid rgba(157,117,52,0.18);
+    padding: 3rem 2rem 2rem;
+    border-bottom: 1px solid rgba(157,117,52,0.15);
   }
-  /* warm golden glow from top-center */
+  /* golden glow behind logo */
   header::before {
     content: '';
     position: absolute;
-    top: -80px; left: 50%;
+    top: -60px; left: 50%;
     transform: translateX(-50%);
-    width: 900px;
-    height: 280px;
-    background: radial-gradient(ellipse at top, rgba(157,117,52,0.14) 0%, transparent 65%);
+    width: 700px;
+    height: 260px;
+    background: radial-gradient(ellipse at top, rgba(157,117,52,0.2) 0%, transparent 60%);
     pointer-events: none;
   }
   /* film grain overlay */
@@ -62,32 +62,31 @@
     z-index: 1;
     max-width: 860px;
     margin: 0 auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
   }
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
-    letter-spacing: -0.5px;
-    color: #fff;
+    font-size: 3.8rem;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    color: #ffffff;
     line-height: 1;
+    margin-bottom: 0.5rem;
   }
-  .logo span { color: var(--gold); font-style: italic; }
+  .logo span { color: #c9922a; font-style: italic; }
   .tagline {
-    font-size: 10.5px;
-    color: rgba(157,117,52,0.8);
-    letter-spacing: 3px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 4px;
     text-transform: uppercase;
-    padding-bottom: 6px;
+    font-weight: 400;
   }
   .disclaimer {
     position: relative;
     z-index: 1;
     max-width: 860px;
-    margin: 0.75rem auto 0;
-    font-size: 10.5px;
-    color: rgba(255,255,255,0.27);
+    margin: 1.25rem auto 0;
+    font-size: 10px;
+    color: rgba(255,255,255,0.18);
   }
 
   /* ── MAIN ── */
@@ -279,9 +278,8 @@
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-left: 4px solid var(--gc, var(--gold));
     border-radius: 14px;
-    padding: 1.5rem 1.5rem 1.5rem 1.35rem;
+    padding: 1.5rem;
     margin-bottom: 1rem;
     display: grid;
     grid-template-columns: 2.5rem 1fr;
@@ -304,7 +302,7 @@
   .card-num {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
-    color: var(--gc, var(--gold));
+    color: var(--gold);
     opacity: 0.5;
     padding-top: 2px;
     line-height: 1;
@@ -412,8 +410,7 @@
   .error.visible { display: block; }
 
   @media (max-width: 600px) {
-    .header-inner { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .tagline { padding-bottom: 0; }
+    .logo { font-size: 2.8rem; }
     .card { grid-template-columns: 1.5rem 1fr; }
     .card-num { font-size: 1.1rem; }
     main { padding: 1.5rem 1rem 3rem; }
@@ -437,7 +434,7 @@
       <span class="input-icon">🎬</span>
       <textarea id="moodInput" placeholder="Describe it like you're texting a friend... e.g. 'Something like Mirzapur but set in Mumbai, dark tone, good writing, doesn't have to be Hindi'" rows="4"></textarea>
       <div class="input-footer">
-        <span class="input-hint">Mood, genre, language, vibe &nbsp;·&nbsp; <kbd>Enter</kbd> to search</span>
+        <span class="input-hint">Mood, genre, language, vibe</span>
         <button class="btn-find" id="findBtn" onclick="getRecommendations()">Find for me →</button>
       </div>
     </div>
@@ -524,14 +521,14 @@ function hexToRgba(hex, a) {
 // ── OTT platform badge style ──
 function platformStyle(p) {
   const s = p.toLowerCase();
-  if (s.includes('netflix'))                        return 'background:#e50914;color:#fff';
-  if (s.includes('prime'))                          return 'background:#00a8e0;color:#fff';
-  if (s.includes('disney') || s.includes('hotstar')) return 'background:#0f2f6b;color:#fff';
-  if (s.includes('jio'))                            return 'background:#6c0dc8;color:#fff';
-  if (s.includes('sony') || s.includes('sonyliv')) return 'background:#003087;color:#fff';
-  if (s.includes('zee'))                            return 'background:#6b2d8b;color:#fff';
-  if (s.includes('apple'))                          return 'background:#1c1c1e;color:#fff';
-  if (s.includes('mx'))                             return 'background:#e0540f;color:#fff';
+  if (s.includes('netflix'))                          return 'background:#E50914;color:#fff';
+  if (s.includes('prime'))                            return 'background:#00A8E1;color:#fff';
+  if (s.includes('disney') || s.includes('hotstar')) return 'background:#1B3A8C;color:#fff';
+  if (s.includes('jio'))                              return 'background:#6C0DC8;color:#fff';
+  if (s.includes('sony') || s.includes('sonyliv'))   return 'background:#1A1A1A;color:#fff';
+  if (s.includes('zee'))                              return 'background:#8B2FC9;color:#fff';
+  if (s.includes('apple'))                            return 'background:#1c1c1e;color:#fff';
+  if (s.includes('mx'))                               return 'background:#e0540f;color:#fff';
   return 'background:#3a3a3a;color:#fff';
 }
 
