@@ -413,7 +413,7 @@
     <div class="examples">
       <span class="chip chip-thriller" onclick="fillExample(this)">A mind-bending thriller like Inception but shorter</span>
       <span class="chip chip-comedy"  onclick="fillExample(this)">Light-hearted Hindi comedy for a lazy Sunday</span>
-      <span class="chip chip-crime"   onclick="fillExample(this)">Dark crime series, binge-worthy, doesn't matter the language</span>
+      <span class="chip chip-crime"   onclick="fillExample(this)">Dark gritty crime series, binge-worthy with complex characters, language doesn't matter</span>
       <span class="chip chip-drama"   onclick="fillExample(this)">Something emotional but not too heavy, like The Pursuit of Happyness</span>
     </div>
   </div>
@@ -596,7 +596,7 @@ function renderCards(movies, mood) {
             ${imdbHtml}
             ${rtHtml}
           </div>
-          <div class="card-platform" style="${platformStyle(m.platform || '')}"><span class="platform-dot"></span>${m.platform}</div>
+          <div class="card-platform" style="${platformStyle(m.platform || '')}">${m.platform}</div>
           <div class="card-reason">${m.reason}</div>
         </div>
       </div>`;
